@@ -73,7 +73,7 @@ if prompt := st.chat_input("How can I assist?"):
     print(result)
     response = result['response']
     sources = result['sources']
-    source_message = F"Here are my sources {sources[0]['file']}.\n\n {sources[0]['text'][:20]} and {sources[1]['file']}.\n\n {sources[1]['text'][:20]}"
+    source_message = F"Here are my sources {sources[0]['file']} \n {sources[0]['text']} \n {sources[0]['score']}. \n\n\n  {sources[1]['file']} \n {sources[1]['text']} \n {sources[1]['score']}.}"
     # response = f"Echo: {prompt}"
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
