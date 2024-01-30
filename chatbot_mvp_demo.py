@@ -46,17 +46,16 @@ def query_rag_pipeline(query,new_context = False):
 
 allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
 
-
 st.title('Discovery Bot Chat Demo')
 
 welcome_msg = "Hello 👋 I am a Discovery Bank chatbot that is able to assist you with queries regarding Discovery Bank."
 
 if "messages" not in st.session_state:
     st.session_state.messages = [{"role": "assistant", "content": welcome_msg}]
-    
-    
-# with st.chat_message("assistant"):
-#     st.write(welcome_msg)
+
+new_chat_context = False
+if len(st.session_state.messages) == 1:
+    new_chat_context = True
     
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
@@ -70,7 +69,7 @@ if prompt := st.chat_input("How can I assist?"):
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
     
-    result = query_rag_pipeline(prompt)
+    result = query_rag_pipeline(prompt,new_context = new_chat_context)
     print(result)
     response = result['response']
     sources = result['sources']
