@@ -9,9 +9,9 @@ def allowSelfSignedHttps(allowed):
     if allowed and not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None):
         ssl._create_default_https_context = ssl._create_unverified_context
 
-def query_rag_pipeline(query,new_context = False):
+def query_rag_pipeline(session_messages,new_context = False):
     data = {
-        "data": query,
+        "data": session_messages,
         "new_context": new_context
     }
 
@@ -69,16 +69,21 @@ if prompt := st.chat_input("How can I assist?"):
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
     
-    result = query_rag_pipeline(prompt,new_context = new_chat_context)
-    print(result)
+    # result = query_rag_pipeline(st.session_state.messages,new_context = new_chat_context)
+    # print(result)
+    print(st.session_state.messages)
+    result = {
+        'response': 'hello'
+        
+    }
     response = result['response']
-    sources = result['sources']
-    source_message = F"Here are my sources {sources[0]['file']} \n {sources[0]['score']}. \n\n\n  {sources[1]['file']} \n {sources[1]['score']}."
+    # sources = result['sources']
+    # source_message = F"Here are my sources {sources[0]['file']} \n {sources[0]['score']}. \n\n\n  {sources[1]['file']} \n {sources[1]['score']}."
     # response = f"Echo: {prompt}"
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
         st.markdown(response)
-        st.markdown(source_message)
+        # st.markdown(source_message)
     # # Add assistant response to chat history
     st.session_state.messages.append({"role": "assistant", "content": response})
-    st.session_state.messages.append({"role": "assistant", "content": source_message})
+    # st.session_state.messages.append({"role": "assistant", "content": source_message})
