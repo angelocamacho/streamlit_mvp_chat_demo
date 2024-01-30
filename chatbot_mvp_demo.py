@@ -77,10 +77,10 @@ if prompt := st.chat_input("How can I assist?"):
     source_message = ""
 
     if sources[0]['score'] > 0.6:
-        source_message = source_message + F"Source: {sources[0]['file']} \n {sources[0]['score']} \n {sources[0]['text'].encode('ascii', errors='ignore')}\n" 
+        source_message = source_message + F"Source: {sources[0]['file']} \n {sources[0]['score']} \n {sources[0]['text'][:100].encode('ascii', errors='ignore')}\n" 
 
     if sources[1]['score'] > 0.6:
-        source_message = source_message + F"Source: {sources[1]['file']} \n {sources[1]['score']} \n {sources[1]['text'].encode('ascii', errors='ignore')}"
+        source_message = source_message + F"Source: {sources[1]['file']} \n {sources[1]['score']} \n {sources[1]['text'][:100].encode('ascii', errors='ignore')}"
         
     complete_message = F"{response} + \n\n + {source_message}"
     # response = f"Echo: {prompt}"
