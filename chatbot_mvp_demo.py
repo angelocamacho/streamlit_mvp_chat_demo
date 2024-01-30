@@ -17,9 +17,9 @@ def query_rag_pipeline(query,new_context = False):
 
     body = str.encode(json.dumps(data))
 
-    url = 'https://discobank-llama2-poc-evoqo.eastus2.inference.ml.azure.com/score'
+    url = os.environ['AZURE_URL']
     # Replace this with the primary/secondary key or AMLToken for the endpoint
-    api_key = 'OBhCDTYPGZNiqhMO78ZbWHtR9byfaNUI'
+    api_key = os.environ['AZURE_API_KEY']
     if not api_key:
         raise Exception("A key should be provided to invoke the endpoint")
 
@@ -83,5 +83,3 @@ if prompt := st.chat_input("How can I assist?"):
     # # Add assistant response to chat history
     st.session_state.messages.append({"role": "assistant", "content": response})
     st.session_state.messages.append({"role": "assistant", "content": source_message})
-    
-
