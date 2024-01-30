@@ -9,9 +9,10 @@ def allowSelfSignedHttps(allowed):
     if allowed and not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None):
         ssl._create_default_https_context = ssl._create_unverified_context
 
-def query_rag_pipeline(session_messages,new_context = False):
+def query_rag_pipeline(query,session_messages,new_context = False):
     data = {
-        "data": session_messages,
+        "query": query,
+        "conv_history": session_messages,
         "new_context": new_context
     }
 
