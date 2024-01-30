@@ -74,12 +74,11 @@ if prompt := st.chat_input("How can I assist?"):
     # print(result)
     response = result['response']
     sources = result['sources']
-    source_message = F"Here are my sources {sources[0]['file']} \n {sources[0]['score']}. \n\n\n  {sources[1]['file']} \n {sources[1]['score']}."
+    source_message = F"Here are my sources {sources[0]['file']} \n {sources[0]['score']} \n {sources[0]['text']}. \n\n\n  {sources[1]['file']} \n {sources[1]['score']} \n {sources[1]['text']}".encode('ascii', errors='ignore')
+    complete_message = response + "\n\n" + source_message
     # response = f"Echo: {prompt}"
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
-        st.markdown(response)
-        st.markdown(source_message)
+        st.markdown(complete_message)
     # # Add assistant response to chat history
-    st.session_state.messages.append({"role": "assistant", "content": response})
-    st.session_state.messages.append({"role": "assistant", "content": source_message})
+    st.session_state.messages.append({"role": "assistant", "content": complete_message})
