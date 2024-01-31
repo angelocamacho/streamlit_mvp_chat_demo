@@ -76,11 +76,8 @@ if prompt := st.chat_input("How can I assist?"):
     sources = result['sources']
     source_message = ""
 
-    if sources[0]['score'] > 0.62:
-        source_message = source_message + F"Source: {sources[0]['file']} \n {sources[0]['score']} \n {sources[0]['text'][:150].encode('ascii', errors='ignore')}\n" 
-
-    if sources[1]['score'] > 0.62:
-        source_message = source_message + F"Source: {sources[1]['file']} \n {sources[1]['score']} \n {sources[1]['text'][:150].encode('ascii', errors='ignore')}"
+    for source in sources:
+        source_message = source_message + F"Source: {sources['file']} \n {sources['score']} \n {sources['text'][:150].encode('ascii', errors='ignore')}\n" 
         
     complete_message = F"{response} + \n\n + {source_message}"
     # response = f"Echo: {prompt}"
@@ -88,4 +85,4 @@ if prompt := st.chat_input("How can I assist?"):
     with st.chat_message("assistant"):
         st.markdown(complete_message)
     # # Add assistant response to chat history
-    st.session_state.messages.append({"role": "assistant", "content": complete_message})
+    st.session_state.messages.append({"role": "assistant", "content": response})
