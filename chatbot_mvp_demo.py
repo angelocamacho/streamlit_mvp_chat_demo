@@ -52,7 +52,7 @@ st.title('Discovery Bot Chat Demo')
 welcome_msg = "Hello 👋 I am a Discovery Bank chatbot that is able to assist you with queries regarding Discovery Bank."
 
 with st.chat_message("assistant"):
-    st.markdown(complete_message)
+    st.markdown(welcome_msg)
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
