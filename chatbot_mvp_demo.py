@@ -77,7 +77,7 @@ if prompt := st.chat_input("How can I assist?"):
     source_message = ""
 
     for source in sources:
-        source_message = source_message + F"Source: {source['file']} \n {source['score']} \n {source['text'][:150].encode('ascii', errors='ignore')}\n" 
+        source_message = source_message + F"Source: {source['file']} \n {source['score']} \n {source['text'][:150].encode('ascii', errors='ignore')}\n\n\n" 
         
     complete_message = F"{response} + \n\n + {source_message}"
     # response = f"Echo: {prompt}"
