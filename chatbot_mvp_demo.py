@@ -15,7 +15,6 @@ def query_rag_pipeline(query,session_messages,new_context = False):
         "conv_history": session_messages,
         "new_context": new_context
     }
-    print(data)
 
     body = str.encode(json.dumps(data))
 
@@ -27,7 +26,7 @@ def query_rag_pipeline(query,session_messages,new_context = False):
 
     # The azureml-model-deployment header will force the request to go to a specific deployment.
     # Remove this header to have the request observe the endpoint traffic rules
-    headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key), 'azureml-model-deployment': 'zephyr-7b-beta-1' }
+    headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key), 'azureml-model-deployment': 'zephyr-7b-beta-10' }
 
     req = urllib.request.Request(url, body, headers)
 
@@ -35,7 +34,6 @@ def query_rag_pipeline(query,session_messages,new_context = False):
         response = urllib.request.urlopen(req)
 
         result = response.read()
-        print(result)
         jsonResponse = json.loads(result.decode())
         # print(result)
     except urllib.error.HTTPError as error:
@@ -53,17 +51,17 @@ st.title('Discovery Bot Chat Demo')
 
 welcome_msg = "Hello 👋 I am a Discovery Bank chatbot that is able to assist you with queries regarding Discovery Bank."
 
-if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "assistant", "content": welcome_msg}]
-
-new_chat_context = False
-if len(st.session_state.messages) == 1:
-    new_chat_context = True
+with st.chat_message("assistant"):
+    st.markdown(welcome_msg)
     
 # Display chat messages from history on app rerun
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
+
+new_chat_context = False
+if len(st.session_state.messages) == 0:
+    new_chat_context = True
         
 # React to user input
 if prompt := st.chat_input("How can I assist?"):
@@ -72,8 +70,6 @@ if prompt := st.chat_input("How can I assist?"):
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
 
-    print("PROMPT")
-    print(prompt)
     result = query_rag_pipeline(prompt,st.session_state.messages,new_context = new_chat_context)
     # print(result)
     response = result['response']
