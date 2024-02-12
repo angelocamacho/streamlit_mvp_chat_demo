@@ -53,11 +53,15 @@ welcome_msg = "Hello 👋 I am a Discovery Bank chatbot that is able to assist y
 
 with st.chat_message("assistant"):
     st.markdown(welcome_msg)
-    
-# Display chat messages from history on app rerun
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+
+# setup session state memory
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+else: 
+    # Display chat messages from history on app rerun
+    for message in st.session_state.messages:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
 
 new_chat_context = False
 if len(st.session_state.messages) == 0:
