@@ -15,6 +15,7 @@ def query_rag_pipeline(query,session_messages,new_context = False):
         "conv_history": session_messages,
         "new_context": new_context
     }
+    print(data)
 
     body = str.encode(json.dumps(data))
 
@@ -34,6 +35,7 @@ def query_rag_pipeline(query,session_messages,new_context = False):
         response = urllib.request.urlopen(req)
 
         result = response.read()
+        print(result)
         jsonResponse = json.loads(result.decode())
         # print(result)
     except urllib.error.HTTPError as error:
