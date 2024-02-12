@@ -71,7 +71,9 @@ if prompt := st.chat_input("How can I assist?"):
     st.chat_message("user").markdown(prompt)
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
-    
+
+    print("PROMPT")
+    print(prompt)
     result = query_rag_pipeline(prompt,st.session_state.messages,new_context = new_chat_context)
     # print(result)
     response = result['response']
