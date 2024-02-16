@@ -159,9 +159,9 @@ def get_faq_data():
     with open(faq_file_path) as file:
         all_faqs= file.readlines()
 
-    all_faqs.join()
+    s = "\n".join(all_faqs) 
     
-    return all_faqs
+    return s
 
 
 def react_to_message():
