@@ -54,15 +54,15 @@ def query_rag_pipeline(query,session_messages,new_context = False):
             
 
 def setup():
-
-    if "run_installs" not in st.session_state:
-        st.session_state.run_installs = True
         
     
     allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
     if "container_client" not in st.session_state:
         container_client = ContainerClient(os.environ['AZURE_BLOB_ACCOUNT_URL'],os.environ['AZURE_BLOB_JPG_CONTAINER'],os.environ['AZURE_BLOB_KEY'])
         st.session_state.container_client = container_client
+
+        container_client = ContainerClient(os.environ['AZURE_BLOB_ACCOUNT_URL'],os.environ['AZURE_BLOB_TEXT_CONTAINER'],os.environ['AZURE_BLOB_KEY'])
+        st.session_state.faq_container_client = container_client
     
     st.title('Discovery Bot Chat Demo')
     welcome_msg = "Hello 👋 I am a Discovery Bank chatbot that is able to assist you with queries regarding Discovery Bank."
@@ -87,8 +87,10 @@ def setup():
         for message in st.session_state.messages:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
-                if "has_button" in message and message["has_button"]:
+                if "has_button" in message and message["has_button"] == "general":
                     create_button(message["btn_key"],message["source_file"])
+                if "has_button" in message and message["has_button"] == "faq":
+                    create_faq_button(message["btn_key"])
             
     
 def create_button(btn_key,source_file):
@@ -100,6 +102,17 @@ def create_button(btn_key,source_file):
         data=image_data,
         file_name="data_source.jpg",
         mime='image/jpeg'
+    )
+
+def create_faq_button(btn_key):
+    faq_data = get_faq_data()
+    
+    st.download_button(
+        key = btn_key,
+        label="Download FAQS",
+        data=faq_data,
+        file_name="all_faqs.txt",
+        mime='text/txt'
     )
     # st.button(key = btn_key,label = "View Source", on_click = show_user_source,kwargs = {"file_path":source_file})
 
@@ -125,6 +138,28 @@ def get_image_data(file_path):
     byte_im = buf.getvalue()
 
     return byte_im
+
+def get_faq_data():
+    faq_file_path = './faq_blob_download.txt'
+    
+    if "faqs_read" not in st.session_state:
+        st.session_state.faqs_read = True
+
+        container_client = st.session_state.faq_container_client
+        blob_generator = container_client.list_blobs()
+        
+    
+        for blob in blob_generator:
+            with open(file=faq_file_path, mode="wb") as blob_file:
+                print(f"Started downloading {blob}")
+                download_stream = container_client.download_blob(blob)
+                print(f"File downloaded, streaming blob into {faq_file_path}")
+                blob_file.write(download_stream.readall())
+
+    with open(faq_file_path) as file:
+        all_faqs= file.readlines()
+    
+    return all_faqs
 
 
 def react_to_message():
@@ -172,9 +207,10 @@ def react_to_message():
                 # source_message = source_message + F"- Source: {source['file']} \n {source['score']} \n {source['text'].encode('ascii', errors='ignore')}\n\n\n" 
                 if source['file'] != 'FAQ_file':
                     create_button(source['id'],source['file'])
-                    st.session_state.messages.append({"role": "assistant", "content": source_message, "has_button": True, "btn_key": source['id'], "source_file": source['file']})
+                    st.session_state.messages.append({"role": "assistant", "content": source_message, "btn_type": "general", "btn_key": source['id'], "source_file": source['file']})
                 else:
-                    st.session_state.messages.append({"role": "assistant", "content": source_message, "has_button": False})
+                    create_faq_button(source['id'])
+                    st.session_state.messages.append({"role": "assistant", "content": source_message, "btn_type": "faq, "btn_key": source['id']})
                     
                         # st.button(,label = "View Source", on_click = show_user_source,kwargs = {"file_path":})
                 
