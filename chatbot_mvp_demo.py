@@ -10,6 +10,7 @@ import cv2
 import imutils
 
 from azure.storage.blob import ContainerClient
+import subprocess
 
 def allowSelfSignedHttps(allowed):
     # bypass the server certificate verification on client side
@@ -54,6 +55,11 @@ def query_rag_pipeline(query,session_messages,new_context = False):
             
 
 def setup():
+
+    if "run_installs" not in st.session_state:
+        subprocess.run(["RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y])
+        st.session_state.run_installs = True
+        
     
     allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
     if "container_client" not in st.session_state:
