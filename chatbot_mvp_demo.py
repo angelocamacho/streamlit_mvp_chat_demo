@@ -57,7 +57,8 @@ def query_rag_pipeline(query,session_messages,new_context = False):
 def setup():
 
     if "run_installs" not in st.session_state:
-        subprocess.run(["apt-get update && apt-get install -y python3-opencv"])
+        # subprocess.run(["apt-get update && apt-get install -y python3-opencv"])
+        os.system("apt-get update && apt-get install -y python3-opencv")
         st.session_state.run_installs = True
         
     
