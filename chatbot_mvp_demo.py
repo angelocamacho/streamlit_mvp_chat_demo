@@ -7,7 +7,7 @@ import ssl
 import numpy as np
 from PIL import Image
 # import cv2
-import imutils
+# import imutils
 
 from azure.storage.blob import ContainerClient
 img = Image.open("./discovery-card-miles-terms-and-conditions_part_7.jpg")
