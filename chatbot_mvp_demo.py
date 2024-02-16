@@ -186,7 +186,7 @@ def get_image_data(file_path):
     image = Image.open(file_path_parts[2])
 
     buf = BytesIO()
-    img.save(buf, format="JPEG")
+    image.save(buf, format="JPEG")
     byte_im = buf.getvalue()
 
     return byte_im
