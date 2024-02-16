@@ -27,9 +27,9 @@ def query_rag_pipeline(query,session_messages,new_context = False):
 
     body = str.encode(json.dumps(data))
 
-    url = "https://discobank-llama2-poc-lgjiw.eastus2.inference.ml.azure.com/score"
+    url = os.environ['AZURE_URL']
     # Replace this with the primary/secondary key or AMLToken for the endpoint
-    api_key = "zkZSbANPaTgy4C6TEdNY6D7QSZo029Vn"
+    api_key = os.environ['AZURE_API_KEY']
     if not api_key:
         raise Exception("A key should be provided to invoke the endpoint")
 
@@ -68,7 +68,7 @@ def setup():
     
     allowSelfSignedHttps(True) # this line is needed if you use self-signed certificate in your scoring service.
     if "container_client" not in st.session_state:
-        container_client = ContainerClient("https://jsondocstorage.blob.core.windows.net","jpg-doc-container","DRUiNp8yXikeIdsZJjPCJs6oGwEwJSbdVNgPKlMCkbTHLzODRhICjxcAsER+4S5MbJEP5bxXK3E3+AStc10Hbg==")
+        container_client = ContainerClient(os.environ['AZURE_BLOB_ACCOUNT_URL'],os.environ['AZURE_BLOB_JPG_CONTAINER'],os.environ['AZURE_BLOB_KEY'])
         st.session_state.container_client = container_client
     
     
