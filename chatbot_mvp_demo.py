@@ -58,7 +58,7 @@ def setup():
 
     if "run_installs" not in st.session_state:
         # subprocess.run(["apt-get update && apt-get install -y python3-opencv"])
-        os.system("sudo apt-get update && apt-get install ffmpeg libsm6 libxext6  -y")
+        # os.system("sudo apt-get update && apt-get install ffmpeg libsm6 libxext6  -y")
         st.session_state.run_installs = True
         
     
