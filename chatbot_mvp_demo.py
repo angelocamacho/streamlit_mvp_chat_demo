@@ -10,9 +10,16 @@ from PIL import Image
 # import imutils
 
 from azure.storage.blob import ContainerClient
-img = Image.open("./discovery-card-miles-terms-and-conditions_part_7.jpg")
-img.show()
+# img = Image.open("./discovery-card-miles-terms-and-conditions_part_7.jpg")
+# img.show()
 
+with open("./discovery-card-miles-terms-and-conditions_part_7.jpg", "rb") as file:
+    btn = st.download_button(
+            label="Download image",
+            data=file,
+            file_name="flower.png",
+            mime="image/jpg"
+          )
 
 # def allowSelfSignedHttps(allowed):
 #     # bypass the server certificate verification on client side
