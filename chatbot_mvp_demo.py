@@ -7,7 +7,6 @@ import ssl
 import numpy as np
 from PIL import Image
 import cv2
-from screeninfo import get_monitors
 import imutils
 
 from azure.storage.blob import ContainerClient
@@ -52,15 +51,6 @@ def query_rag_pipeline(query,session_messages,new_context = False):
         print(error.read().decode("utf8", 'ignore'))
     
     return jsonResponse
-
-def get_screen_resolution():
-
-    global width
-    global height
-    for m in get_monitors():
-        if m.is_primary:
-            width = m.width
-            height = m.height
             
 
 def setup():
@@ -69,9 +59,6 @@ def setup():
     if "container_client" not in st.session_state:
         container_client = ContainerClient(os.environ['AZURE_BLOB_ACCOUNT_URL'],os.environ['AZURE_BLOB_JPG_CONTAINER'],os.environ['AZURE_BLOB_KEY'])
         st.session_state.container_client = container_client
-    
-    
-    get_screen_resolution()
     
     st.title('Discovery Bot Chat Demo')
     welcome_msg = "Hello 👋 I am a Discovery Bank chatbot that is able to assist you with queries regarding Discovery Bank."
