@@ -165,7 +165,7 @@ def create_button(btn_key,source_file):
     )
     # st.button(key = btn_key,label = "View Source", on_click = show_user_source,kwargs = {"file_path":source_file})
 
-def get_image_data(source_file):
+def get_image_data(file_path):
     file_path_parts =  file_path.split("\\")
     print(file_path)
     print(file_path_parts)
