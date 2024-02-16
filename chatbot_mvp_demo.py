@@ -5,7 +5,6 @@ import os
 import ssl
 
 import numpy as np
-import matplotlib.pyplot as plt
 from PIL import Image
 import cv2
 from screeninfo import get_monitors
