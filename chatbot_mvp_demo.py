@@ -210,7 +210,7 @@ def react_to_message():
                     st.session_state.messages.append({"role": "assistant", "content": source_message, "btn_type": "general", "btn_key": source['id'], "source_file": source['file']})
                 else:
                     create_faq_button(source['id'])
-                    st.session_state.messages.append({"role": "assistant", "content": source_message, "btn_type": "faq, "btn_key": source['id']})
+                    st.session_state.messages.append({"role": "assistant", "content": source_message, "btn_type": "faq", "btn_key": source['id']})
                     
                         # st.button(,label = "View Source", on_click = show_user_source,kwargs = {"file_path":})
                 
