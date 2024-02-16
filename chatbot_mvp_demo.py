@@ -87,9 +87,9 @@ def setup():
         for message in st.session_state.messages:
             with st.chat_message(message["role"]):
                 st.markdown(message["content"])
-                if "has_button" in message and message["has_button"] == "general":
+                if "btn_type" in message and message["btn_type"] == "general":
                     create_button(message["btn_key"],message["source_file"])
-                if "has_button" in message and message["has_button"] == "faq":
+                if "btn_type" in message and message["btn_type"] == "faq":
                     create_faq_button(message["btn_key"])
             
     
