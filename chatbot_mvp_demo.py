@@ -188,7 +188,7 @@ def react_to_message():
                 
                 
                 # source_message = source_message + F"- Source: {source['file']} \n {source['score']} \n {source['text'].encode('ascii', errors='ignore')}\n\n\n" 
-                if 'faq' not in source['file']:
+                if source['file'] != 'FAQ_file':
                     create_button(source['text'].encode('ascii', errors='ignore'),source['file'])
                     st.session_state.messages.append({"role": "assistant", "content": source_message, "has_button": True, "btn_key": source['text'].encode('ascii', errors='ignore'), "source_file": source['file']})
                 else:
