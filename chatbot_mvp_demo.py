@@ -98,7 +98,7 @@ def create_button(btn_key,source_file):
         key = btn_key,
         label="Download Source",
         data=image_data,
-        file_name="data_source",
+        file_name="data_source.jpg",
         mime='image/jpeg'
     )
     # st.button(key = btn_key,label = "View Source", on_click = show_user_source,kwargs = {"file_path":source_file})
