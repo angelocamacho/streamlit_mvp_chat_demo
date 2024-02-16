@@ -158,6 +158,8 @@ def get_faq_data():
 
     with open(faq_file_path) as file:
         all_faqs= file.readlines()
+
+    all_faqs.join()
     
     return all_faqs
 
