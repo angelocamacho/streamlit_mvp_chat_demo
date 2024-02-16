@@ -1,4 +1,4 @@
-opencv-python==4.3.0.38
+opencv-python==3.8
 screeninfo
 imutils
 azure-identity
