@@ -102,6 +102,8 @@ def show_user_source(file_path):
         cv2.destroyAllWindows() 
     
     file_path_parts =  file_path.split("\\")
+    print(file_path)
+    print(file_path_parts)
     azure_file_path = file_path_parts[1] +'/' + file_path_parts[2]
     print(azure_file_path)
     try:
