@@ -10,8 +10,6 @@ from io import BytesIO
 # import cv2
 
 from azure.storage.blob import ContainerClient
-# img = Image.open("./discovery-card-miles-terms-and-conditions_part_7.jpg")
-# img.show()
 
 def allowSelfSignedHttps(allowed):
     # bypass the server certificate verification on client side
@@ -58,8 +56,6 @@ def query_rag_pipeline(query,session_messages,new_context = False):
 def setup():
 
     if "run_installs" not in st.session_state:
-        # subprocess.run(["apt-get update && apt-get install -y python3-opencv"])
-        # os.system("sudo apt-get update && apt-get install ffmpeg libsm6 libxext6  -y")
         st.session_state.run_installs = True
         
     
@@ -93,65 +89,7 @@ def setup():
                 st.markdown(message["content"])
                 if "has_button" in message and message["has_button"]:
                     create_button(message["btn_key"],message["source_file"])
-                
-                
-# def show_user_source(file_path):
-
-#     # if "image_open" not in st.session_state:
-#     #     st.session_state.image_open = True
-#     # elif st.session_state.image_open:
-#     #     cv2.destroyAllWindows() 
-    
-#     file_path_parts =  file_path.split("\\")
-#     print(file_path)
-#     print(file_path_parts)
-#     azure_file_path = file_path_parts[1] +'/' + file_path_parts[2]
-#     print(azure_file_path)
-#     try:
-#         blob_name = st.session_state.container_client.list_blobs(name_starts_with=azure_file_path).next()
-#     except:
-#         print(f"No blob found with the file_path {azure_file_path}")
-#         return
-    
-#     download_stream = st.session_state.container_client.download_blob(blob_name)
-#     blob_bytes = download_stream.readall()
-    
-#     with open(file_path_parts[2], "wb") as file:
-#         # with open("./discovery-card-miles-terms-and-conditions_part_7.jpg", "rb") as file:
-#         btn = st.download_button(
-#                 label="Download image",
-#                 data=file,
-#                 file_name="flower.png",
-#                 mime="image/jpg"
-#               )
-        
-#         file.write(blob_bytes)
-
-    
-        
-#     image = cv2.imread(file_path_parts[2]) 
-#     image = imutils.resize(image,width = 700)
-#     # image = image_resize(image, height = 800)
-
-#     window_name = 'Document source'
-  
-#     # Using cv2.imshow() method 
-#     # Displaying the imag
-#     cv2.imshow(window_name, image) 
-#     cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
-#     cv2.setWindowProperty(window_name, cv2.WND_PROP_TOPMOST, 1)
-#     # cv2.resizeWindow(window_name, int(0.4* width), int(0.8* height))
-#     # cv2.resizeWindow(window_name, 600, 600)
-    
-#     # waits for user to press any key 
-#     # (this is necessary to avoid Python kernel form crashing) 
-    
-#     st.session_state.image_open = True
-#     cv2.waitKey(0) 
-    
-#     # closing all open windows 
-#     cv2.destroyAllWindows() 
-#     st.session_state.image_open = False
+            
     
 def create_button(btn_key,source_file):
     image_data = get_image_data(source_file)
@@ -160,17 +98,14 @@ def create_button(btn_key,source_file):
         key = btn_key,
         label="Download Source",
         data=image_data,
-        file_name=source_file,
+        file_name="data_source",
         mime='image/jpeg'
     )
     # st.button(key = btn_key,label = "View Source", on_click = show_user_source,kwargs = {"file_path":source_file})
 
 def get_image_data(file_path):
     file_path_parts =  file_path.split("\\")
-    print(file_path)
-    print(file_path_parts)
     azure_file_path = file_path_parts[1] +'/' + file_path_parts[2]
-    print(azure_file_path)
     try:
         blob_name = st.session_state.container_client.list_blobs(name_starts_with=azure_file_path).next()
     except:
@@ -195,51 +130,51 @@ def get_image_data(file_path):
 def react_to_message():
                 
     # React to user input
-    if prompt := st.chat_input("How can I assist?"):
-        with st.chat_message("assistant"):
-            st.markdown("Thanks")
-            
-            for i in range(4):
-                st.markdown(i)
-                create_button(i,"target-dir\\discovery-card-miles-terms-and-conditions_parts\\discovery-card-miles-terms-and-conditions_part_7.jpg")
-                # st.button(key = i,label = "View Source", on_click = show_user_source,kwargs = {"file_path": "target-dir\discovery-card-miles-terms-and-conditions_parts\discovery-card-miles-terms-and-conditions_part_7.jpg"})
     # if prompt := st.chat_input("How can I assist?"):
-        
-    #     # Display user message in chat message container
-    #     st.chat_message("user").markdown(prompt)
-        
-    #     # Add user message to chat history
-    #     st.session_state.messages.append({"role": "user", "content": prompt})
-    #     st.session_state.chat_context.append({"role": "user", "content": prompt})
-        
-
-    #     result = query_rag_pipeline(prompt,st.session_state.chat_context,new_context = new_chat_context)
-    #     # print(result)
-    #     response = result['response']
-    #     sources = result['sources']
-    #     # source_message = response + '\n'
-
-        
     #     with st.chat_message("assistant"):
-    #         st.markdown(response)
-    #         st.session_state.chat_context.append({"role": "assistant", "content": response})
-    #         st.session_state.messages.append({"role": "assistant", "content": response})
+    #         st.markdown("Thanks")
+            
+    #         for i in range(4):
+    #             st.markdown(i)
+    #             create_button(i,"target-dir\\discovery-card-miles-terms-and-conditions_parts\\discovery-card-miles-terms-and-conditions_part_7.jpg")
+                # st.button(key = i,label = "View Source", on_click = show_user_source,kwargs = {"file_path": "target-dir\discovery-card-miles-terms-and-conditions_parts\discovery-card-miles-terms-and-conditions_part_7.jpg"})
+    if prompt := st.chat_input("How can I assist?"):
+        
+        # Display user message in chat message container
+        st.chat_message("user").markdown(prompt)
+        
+        # Add user message to chat history
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        st.session_state.chat_context.append({"role": "user", "content": prompt})
+        
+
+        result = query_rag_pipeline(prompt,st.session_state.chat_context,new_context = new_chat_context)
+        # print(result)
+        response = result['response']
+        sources = result['sources']
+        # source_message = response + '\n'
+
+        
+        with st.chat_message("assistant"):
+            st.markdown(response)
+            st.session_state.chat_context.append({"role": "assistant", "content": response})
+            st.session_state.messages.append({"role": "assistant", "content": response})
 
 
-    #         for source in sources:
-    #             print(float(source['score']))
-    #             # if float(source['score']) > 0.1:
+            for source in sources:
+                print(float(source['score']))
+                # if float(source['score']) > 0.1:
                 
-    #             source_message = F"- Source: {source['file']} \n {source['score']} \n {source['text'].encode('ascii', errors='ignore')}\n\n\n"
-    #             st.markdown(source_message)
+                source_message = F"- Source: {source['file']} \n {source['score']} \n {source['text'].encode('ascii', errors='ignore')}\n\n\n"
+                st.markdown(source_message)
                 
                 
-    #             # source_message = source_message + F"- Source: {source['file']} \n {source['score']} \n {source['text'].encode('ascii', errors='ignore')}\n\n\n" 
-    #             if source['file'] != 'FAQ_file':
-    #                 create_button(source['text'].encode('ascii', errors='ignore'),source['file'])
-    #                 st.session_state.messages.append({"role": "assistant", "content": source_message, "has_button": True, "btn_key": source['text'].encode('ascii', errors='ignore'), "source_file": source['file']})
-    #             else:
-    #                 st.session_state.messages.append({"role": "assistant", "content": source_message, "has_button": False})
+                # source_message = source_message + F"- Source: {source['file']} \n {source['score']} \n {source['text'].encode('ascii', errors='ignore')}\n\n\n" 
+                if source['file'] != 'FAQ_file':
+                    create_button(source['id'],source['file'])
+                    st.session_state.messages.append({"role": "assistant", "content": source_message, "has_button": True, "btn_key": source['id'], "source_file": source['file']})
+                else:
+                    st.session_state.messages.append({"role": "assistant", "content": source_message, "has_button": False})
                     
                         # st.button(,label = "View Source", on_click = show_user_source,kwargs = {"file_path":})
                 
