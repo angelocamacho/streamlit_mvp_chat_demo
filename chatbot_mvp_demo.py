@@ -88,6 +88,8 @@ def query_rag_pipeline(query,session_messages,new_context = False):
     
     return jsonResponse
             
+global global_btn_key
+global_btn_key = 0
 
 def setup():
         
@@ -104,9 +106,6 @@ def setup():
     welcome_msg = "Hello 👋 I am your Discovery Bank chatbot that is able to assist you with queries regarding Discovery Bank."
     with st.chat_message("assistant", avatar=getUserIcon("assistant")):
         st.markdown(welcome_msg)
-        
-    global global_btn_key
-    global_btn_key = 0
         
     # messages are the messages the user sees, we keep track of everything
     # chat_context is only the chat history we want to pass back
