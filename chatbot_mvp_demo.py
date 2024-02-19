@@ -208,7 +208,7 @@ def react_to_message():
                     
                     if source['file'] != 'FAQ_file':
                         create_button(source['id'],source['file'])
-                        st.session_state.messages.append({"role": "assistant", "content": source_message, "btn_type": "general", "btn_key": sources['id'], "source_file": source['file']})
+                        st.session_state.messages.append({"role": "assistant", "content": source_message, "btn_type": "general", "btn_key": source['id'], "source_file": source['file']})
                         
                     else:
                         create_faq_button(source['id'])
