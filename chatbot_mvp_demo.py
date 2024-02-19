@@ -199,20 +199,27 @@ def react_to_message():
 
 
             for source in sources:
-                print(float(source['score']))
-                # if float(source['score']) > 0.1:
+                with st.expander("**Source:** " + source['file'].replace("target-dir\\","")):
                 
-                source_message = F"- Source: {source['file']} \n {source['score']} \n {source['text'].encode('ascii', errors='ignore')}\n\n\n"
-                st.markdown(source_message)
+                    st.markdown(F"**Score:** {source['score']}")
+                    st.markdown(F"**Extract:** {source['text'].encode('ascii', errors='ignore').decode()}".replace("\\n", ""))
+                    
+                    if source['file'] != 'FAQ_file':
+                        create_button(source['id'],source['file'])
+                    else:
+                        create_faq_button(source['id'])
+                
+                # source_message = F"- Source: {source['file']} \n {source['score']} \n {source['text'].encode('ascii', errors='ignore')}\n\n\n"
+                # st.markdown(source_message)
                 
                 
-                # source_message = source_message + F"- Source: {source['file']} \n {source['score']} \n {source['text'].encode('ascii', errors='ignore')}\n\n\n" 
-                if source['file'] != 'FAQ_file':
-                    create_button(source['id'],source['file'])
-                    st.session_state.messages.append({"role": "assistant", "content": source_message, "btn_type": "general", "btn_key": source['id'], "source_file": source['file']})
-                else:
-                    create_faq_button(source['id'])
-                    st.session_state.messages.append({"role": "assistant", "content": source_message, "btn_type": "faq", "btn_key": source['id']})
+                # # source_message = source_message + F"- Source: {source['file']} \n {source['score']} \n {source['text'].encode('ascii', errors='ignore')}\n\n\n" 
+                # if source['file'] != 'FAQ_file':
+                #     create_button(source['id'],source['file'])
+                #     st.session_state.messages.append({"role": "assistant", "content": source_message, "btn_type": "general", "btn_key": source['id'], "source_file": source['file']})
+                # else:
+                #     create_faq_button(source['id'])
+                #     st.session_state.messages.append({"role": "assistant", "content": source_message, "btn_type": "faq", "btn_key": source['id']})
                     
                         # st.button(,label = "View Source", on_click = show_user_source,kwargs = {"file_path":})
                 
