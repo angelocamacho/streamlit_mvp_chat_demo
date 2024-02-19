@@ -95,7 +95,8 @@ def setup():
     
 def create_button(btn_key,source_file):
     image_data = get_image_data(source_file)
-    
+    st.image(image_file,output_format="JPEG")
+
     st.download_button(
         key = btn_key,
         label="Download Source",
