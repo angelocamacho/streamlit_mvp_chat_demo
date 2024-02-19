@@ -101,11 +101,13 @@ def setup():
         st.session_state.faq_container_client = container_client
     
     st.title('Discovery Bot Chat Demo')
-    welcome_msg = "Hello 👋 I am a Discovery Bank chatbot that is able to assist you with queries regarding Discovery Bank."
+    welcome_msg = "Hello 👋 I am your Discovery Bank chatbot that is able to assist you with queries regarding Discovery Bank."
     with st.chat_message("assistant", avatar=getUserIcon("assistant")):
         st.markdown(welcome_msg)
         
-    
+    global global_btn_key
+    global_btn_key = 0
+        
     # messages are the messages the user sees, we keep track of everything
     # chat_context is only the chat history we want to pass back
     # setup session state memory
@@ -139,15 +141,12 @@ def setup():
             
     
 def create_button(btn_key,source_file):
-    if 'key' in st.session_state:
-        last_num = int(btn_key[-1])
-        last_num = last_num + 1
-        btn_key[-1] = last_num
+    global_btn_key = global_btn_key + 1 
     image_data = get_image_data(source_file)
     st.image(image_data,output_format="JPEG")
 
     st.download_button(
-        key = btn_key,
+        key = global_btn_key,
         label="Download Source",
         data=image_data,
         file_name="data_source.jpg",
@@ -155,14 +154,12 @@ def create_button(btn_key,source_file):
     )
 
 def create_faq_button(btn_key):
-    if 'key' in st.session_state:
-        last_num = int(btn_key[-1])
-        last_num = last_num + 1
-        btn_key[-1] = last_num
+    global_btn_key = global_btn_key + 1 
+
     faq_data = get_faq_data()
     
     st.download_button(
-        key = btn_key,
+        key = global_btn_key,
         label="Download FAQS",
         data=faq_data,
         file_name="all_faqs.txt",
