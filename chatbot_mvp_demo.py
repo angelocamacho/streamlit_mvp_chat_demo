@@ -201,9 +201,9 @@ def react_to_message():
 
             for source in sources:
                 with st.expander("**Source:** " + source['file'].replace("target-dir\\","")):
-                
+                    source_message = source['text'].encode('ascii', errors='ignore').decode().replace("\\n", "")
                     st.markdown(F"**Score:** {source['score']}")
-                    st.markdown(F"**Extract:** {source['text'].encode('ascii', errors='ignore').decode()}".replace("\\n", ""))
+                    st.markdown(F"**Extract:** {source_message}")
                     
                     if source['file'] != 'FAQ_file':
                         create_button(source['id'],source['file'])
