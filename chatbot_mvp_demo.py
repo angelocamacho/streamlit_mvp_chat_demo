@@ -88,9 +88,6 @@ def query_rag_pipeline(query,session_messages,new_context = False):
     
     return jsonResponse
             
-global global_btn_key
-global_btn_key = 0
-
 def setup():
         
     
@@ -106,7 +103,10 @@ def setup():
     welcome_msg = "Hello 👋 I am your Discovery Bank chatbot that is able to assist you with queries regarding Discovery Bank."
     with st.chat_message("assistant", avatar=getUserIcon("assistant")):
         st.markdown(welcome_msg)
-        
+    
+    if "global_btn_key" not in st.session_state:
+        st.session_state.global_btn_key = 0
+    
     # messages are the messages the user sees, we keep track of everything
     # chat_context is only the chat history we want to pass back
     # setup session state memory
@@ -140,12 +140,12 @@ def setup():
             
     
 def create_button(btn_key,source_file):
-    global_btn_key = global_btn_key + 1 
+    st.session_state.global_btn_key = st.session_state.global_btn_key + 1 
     image_data = get_image_data(source_file)
     st.image(image_data,output_format="JPEG")
 
     st.download_button(
-        key = global_btn_key,
+        key = st.session_state.global_btn_key,
         label="Download Source",
         data=image_data,
         file_name="data_source.jpg",
@@ -153,12 +153,12 @@ def create_button(btn_key,source_file):
     )
 
 def create_faq_button(btn_key):
-    global_btn_key = global_btn_key + 1 
+    st.session_state.global_btn_key = st.session_state.global_btn_key + 1 
 
     faq_data = get_faq_data()
     
     st.download_button(
-        key = global_btn_key,
+        key = st.session_state.global_btn_key,
         label="Download FAQS",
         data=faq_data,
         file_name="all_faqs.txt",
