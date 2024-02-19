@@ -124,8 +124,8 @@ def setup():
             with st.chat_message(message["role"], avatar=getUserIcon(message["role"])):
                 content = message["content"]
                 if "sources" in message:                    
-                    st.markdown(content);
-                    add_sources(message["sources"];                    
+                    st.markdown(content)
+                    add_sources(message["sources"])            
                 else:
                     st.markdown(content)            
     
