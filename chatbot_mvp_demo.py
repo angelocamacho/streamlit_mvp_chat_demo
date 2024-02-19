@@ -221,7 +221,7 @@ def react_to_message():
                         
                     else:
                         create_faq_button(source['id'])
-                        st.session_state.messages.append({"role": "assistant", "content": source_message, "btn_type": "faq", "btn_key": source['id']})
+                        st.session_state.messages.append({"role": "assistant", "content": source_message, "btn_type": "faq", "btn_key": source['id'], "source_file": source['file']})
                         
                 
                 # source_message = F"- Source: {source['file']} \n {source['score']} \n {source['text'].encode('ascii', errors='ignore')}\n\n\n"
