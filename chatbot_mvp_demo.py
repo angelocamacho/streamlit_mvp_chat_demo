@@ -200,8 +200,9 @@ def react_to_message():
 
 
             for source in sources:
+                source_message = source['text'].encode('ascii', errors='ignore').decode().replace("\\n", "")
+            
                 with st.expander("**Source:** " + source['file'].replace("target-dir\\","")):
-                    source_message = source['text'].encode('ascii', errors='ignore').decode().replace("\\n", "")
                     st.markdown(F"**Score:** {source['score']}")
                     st.markdown(F"**Extract:** {source_message}")
                     
