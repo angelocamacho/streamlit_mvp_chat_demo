@@ -86,11 +86,20 @@ def setup():
         # Display chat messages from history on app rerun
         for message in st.session_state.messages:
             with st.chat_message(message["role"]):
-                st.markdown(message["content"])
-                if "btn_type" in message and message["btn_type"] == "general":
-                    create_button(message["btn_key"],message["source_file"])
-                if "btn_type" in message and message["btn_type"] == "faq":
-                    create_faq_button(message["btn_key"])
+                content = message["content"]
+                if "btn_type" in message:
+                    
+                    with st.expander("**Source:** " + message['source_file'].replace("target-dir\\","")):
+                        st.markdown(F"**Extract:** {content}")
+                        
+                        if message["btn_type"] == "general":
+                            create_button(message["btn_key"],message["source_file"])
+                        if message["btn_type"] == "faq":
+                            create_faq_button(message["btn_key"])
+                else:
+                    st.markdown(content)
+                
+                
             
     
 def create_button(btn_key,source_file):
