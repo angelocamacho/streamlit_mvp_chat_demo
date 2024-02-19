@@ -103,6 +103,10 @@ def setup():
             
     
 def create_button(btn_key,source_file):
+    if 'key' in st.session_state:
+        last_num = int(btn_key[-1])
+        last_num = last_num + 1
+        btn_key[-1] = last_num
     image_data = get_image_data(source_file)
     st.image(image_data,output_format="JPEG")
 
@@ -115,6 +119,10 @@ def create_button(btn_key,source_file):
     )
 
 def create_faq_button(btn_key):
+    if 'key' in st.session_state:
+        last_num = int(btn_key[-1])
+        last_num = last_num + 1
+        btn_key[-1] = last_num
     faq_data = get_faq_data()
     
     st.download_button(
@@ -215,12 +223,14 @@ def react_to_message():
                     st.markdown(F"**Score:** {source['score']}")
                     st.markdown(F"**Extract:** {source_message}")
                     
+                    btn_key = source['id'] + '0'
+                    
                     if source['file'] != 'FAQ_file':
-                        create_button(source['id'],source['file'])
+                        create_button(btn_key,source['file'])
                         st.session_state.messages.append({"role": "assistant", "content": source_message, "btn_type": "general", "btn_key": source['id'], "source_file": source['file']})
                         
                     else:
-                        create_faq_button(source['id'])
+                        create_faq_button(btn_key)
                         st.session_state.messages.append({"role": "assistant", "content": source_message, "btn_type": "faq", "btn_key": source['id'], "source_file": source['file']})
                         
                 
