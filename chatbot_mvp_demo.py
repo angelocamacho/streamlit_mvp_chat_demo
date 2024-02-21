@@ -4,6 +4,7 @@ import urllib.request
 import json
 import os
 import ssl
+import logging
 
 import numpy as np
 from PIL import Image
@@ -13,10 +14,12 @@ import yaml
 from azure.storage.blob import ContainerClient
 from yaml.loader import SafeLoader
 
+log = logging.getLogger("chatdemo")
+
 with open('config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
-print(config)
+log.info(config)
 
 def allowSelfSignedHttps(allowed):
     # bypass the server certificate verification on client side
