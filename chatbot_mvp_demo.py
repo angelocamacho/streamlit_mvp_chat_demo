@@ -1,4 +1,5 @@
 import streamlit as st
+import streamlit_authenticator as stauth
 import urllib.request
 import json
 import os
@@ -7,9 +8,13 @@ import ssl
 import numpy as np
 from PIL import Image
 from io import BytesIO
-# import cv2
+import yaml
 
 from azure.storage.blob import ContainerClient
+from yaml.loader import SafeLoader
+
+with open('../config.yaml') as file:
+    config = yaml.load(file, Loader=SafeLoader)
 
 def allowSelfSignedHttps(allowed):
     # bypass the server certificate verification on client side
@@ -285,7 +290,20 @@ def react_to_message():
         
         # Add assistant response to chat history
 
-setup()
-react_to_message()
-# show_user_source("target-dir\discovery-card-miles-terms-and-conditions_parts\discovery-card-miles-terms-and-conditions_part_7.jpg")
-# react_to_message()
+authenticator = stauth.Authenticate(
+    config['credentials'],
+    config['cookie']['name'],
+    config['cookie']['key'],
+    config['cookie']['expiry_days'],
+    config['preauthorized']
+)
+
+if st.session_state["authentication_status"]:
+    setup()
+    react_to_message()
+elif st.session_state["authentication_status"] is False:
+    st.error('Username/password is incorrect')
+    authenticator.login()
+elif st.session_state["authentication_status"] is None:
+    st.warning('Please enter your username and password')
+    authenticator.login()
