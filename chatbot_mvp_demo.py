@@ -19,7 +19,9 @@ log = logging.getLogger("chatdemo")
 with open('config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
+print("Config")
 log.info(config)
+print(config)
 
 def allowSelfSignedHttps(allowed):
     # bypass the server certificate verification on client side
