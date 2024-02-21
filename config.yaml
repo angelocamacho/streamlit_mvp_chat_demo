@@ -6,7 +6,7 @@ credentials:
       password: $2b$12$HEWbOw9VDYQsAYCe/HgKAeip60IL7/sEhiiiJ3oo2yXqOdD9IuBX2
 cookie:
   expiry_days: 5
-  key: sdasdasdasdad
-  name: discobmvpchatdemoauth
+  key: discobdemo
+  name: discobdemo
 preauthorized:
   emails:
