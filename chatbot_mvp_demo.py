@@ -14,15 +14,14 @@ import yaml
 from azure.storage.blob import ContainerClient
 from yaml.loader import SafeLoader
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 log = logging.getLogger(__name__)
 
 with open('config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
-print("Config")
+log.info("Config")
 log.info(config)
-print(config)
 
 def allowSelfSignedHttps(allowed):
     # bypass the server certificate verification on client side
