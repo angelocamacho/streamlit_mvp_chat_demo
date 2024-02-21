@@ -1,3 +1,4 @@
 pillow
 azure-identity
 azure-storage-blob
+streamlit-authenticator
