@@ -299,6 +299,7 @@ authenticator = stauth.Authenticate(
 )
 
 if st.session_state["authentication_status"]:
+    authenticator.logout()
     setup()
     react_to_message()
 elif st.session_state["authentication_status"] is False:
