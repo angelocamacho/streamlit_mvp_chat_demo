@@ -8,3 +8,5 @@ cookie:
   expiry_days: 5
   key: sdasdasdasdad
   name: discobmvpchatdemoauth
+preauthorized:
+  emails:
