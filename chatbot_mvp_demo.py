@@ -305,13 +305,13 @@ authenticator = stauth.Authenticate(
     config['preauthorized']
 )
 
+ authenticator.login()
+
 if st.session_state["authentication_status"]:
     authenticator.logout()
     setup()
     react_to_message()
 elif st.session_state["authentication_status"] is False:
-    st.error('Username/password is incorrect')
-    authenticator.login()
+    st.error('Username/password is incorrect')   
 elif st.session_state["authentication_status"] is None:
     st.warning('Please enter your username and password')
-    authenticator.login()
