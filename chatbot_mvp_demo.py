@@ -20,9 +20,6 @@ log = logging.getLogger(__name__)
 with open('config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
-log.info("Config")
-log.info(config)
-
 def allowSelfSignedHttps(allowed):
     # bypass the server certificate verification on client side
     if allowed and not os.environ.get('PYTHONHTTPSVERIFY', '') and getattr(ssl, '_create_unverified_context', None):
@@ -305,13 +302,13 @@ authenticator = stauth.Authenticate(
     config['preauthorized']
 )
 
-authenticator.login()
-
 if st.session_state["authentication_status"]:
     authenticator.logout()
     setup()
     react_to_message()
 elif st.session_state["authentication_status"] is False:
     st.error('Username/password is incorrect')   
+    authenticator.login()
 elif st.session_state["authentication_status"] is None:
     st.warning('Please enter your username and password')
+    authenticator.login()
