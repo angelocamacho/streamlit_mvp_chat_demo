@@ -14,7 +14,8 @@ import yaml
 from azure.storage.blob import ContainerClient
 from yaml.loader import SafeLoader
 
-log = logging.getLogger("chatdemo")
+logging.basicConfig(level=logging.DEBUG)
+log = logging.getLogger(__name__)
 
 with open('config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
